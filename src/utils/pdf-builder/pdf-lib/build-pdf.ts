@@ -1,3 +1,5 @@
+import { type PdfMetadata, defaultMetadata } from './metadata'
+
 interface ImageInfo {
   blob: Blob
   width: number
@@ -5,7 +7,10 @@ interface ImageInfo {
   ppi: number
 }
 
-export async function buildPDF(images: ImageInfo[]): Promise<Blob> {
+export async function buildPDF(
+  images: ImageInfo[],
+  metadata: PdfMetadata = defaultMetadata
+): Promise<Blob> {
   const { PDFDocument } = await import('pdf-lib')
   const pdfDoc = await PDFDocument.create()
 
@@ -33,15 +38,23 @@ export async function buildPDF(images: ImageInfo[]): Promise<Blob> {
     })
   }
 
-  // TODO: use custom metadata
+  // las cadenas vacías se guardan vacías: así no queda rastro de la librería
+  pdfDoc.setTitle(metadata.title)
+  pdfDoc.setAuthor(metadata.author)
+  pdfDoc.setSubject(metadata.subject)
+  pdfDoc.setKeywords(
+    metadata.keywords
+      .split(',')
+      .map((k) => k.trim())
+      .filter(Boolean)
+  )
   pdfDoc.setProducer(metadata.producer)
   pdfDoc.setCreator(metadata.creator)
+  const created = new Date(metadata.creationDate ?? Date.now())
+  pdfDoc.setCreationDate(created)
+  pdfDoc.setModificationDate(new Date(metadata.modDate ?? created.getTime()))
 
   const pdfBytes = await pdfDoc.save()
   return new Blob([pdfBytes], { type: 'application/pdf' })
 }
 
-const metadata = {
-  producer: 'SECnvtToPDF V1.0',
-  creator: 'TOSHIBA e-STUDIO2010AC'
-}

@@ -41,6 +41,7 @@ import { fileOpen, fileSave } from 'browser-fs-access'
 import { zipSync } from 'fflate'
 import { useI18n } from 'vue-i18n'
 import { scanFile } from '@/utils/scan-file'
+import type { PdfMetadata } from '@/utils/pdf-builder/pdf-lib'
 import { IMAGE_EXTENSIONS, IMAGE_MIME_TYPES } from '@/utils/images-to-pdf-file'
 
 const { t } = useI18n()
@@ -49,6 +50,7 @@ const props = defineProps<{
   scanRenderer?: { renderPage(image: Blob): Promise<{ blob: Blob }> }
   scale: number
   output: 'pdf' | 'zip'
+  metadata?: PdfMetadata
 }>()
 
 const running = ref(false)
@@ -90,7 +92,7 @@ async function run(files: File[]) {
   for (const file of files) {
     current.value = file.name
     try {
-      const entries = await scanFile(file, scan, props.scale, props.output)
+      const entries = await scanFile(file, scan, props.scale, props.output, undefined, props.metadata)
       for (const entry of entries) {
         zipEntries[uniqueName(entry.name, used)] = entry.bytes
       }

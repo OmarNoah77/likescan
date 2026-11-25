@@ -2,7 +2,7 @@
   <FeatureHolder :title="t('features.openSource.title')" :icon="LogoGithub">
     <i18n-t keypath="features.openSource.description">
       <template #github>
-        <a href="https://github.com/rwv/lookscanned.io" class="plain-link" target="_blank">{{
+        <a href="https://github.com/OmarNoah77/likescan" class="plain-link" target="_blank">{{
           t('features.openSource.github')
         }}</a>
       </template>

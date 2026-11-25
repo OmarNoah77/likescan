@@ -18,7 +18,7 @@
             :pdf="scannedPDF"
           />
 
-          <BatchCard :scanRenderer="scanRenderer" :scale="scale" :output="output" />
+          <BatchCard :scanRenderer="scanRenderer" :scale="scale" :output="output" :metadata="metadata" />
         </n-space>
       </n-grid-item>
       <n-grid-item span="12 s:7 m:8 l:6">
@@ -33,6 +33,13 @@
           <n-card size="small">
             <OverlaySettings v-model:config="config" />
           </n-card>
+          <n-card size="small" style="margin-top: 16px">
+            <n-collapse>
+              <n-collapse-item :title="t('settings.metadata.title_section')" name="meta">
+                <MetadataSettings v-model:metadata="metadata" />
+              </n-collapse-item>
+            </n-collapse>
+          </n-card>
         </div>
       </n-grid-item>
     </n-grid>
@@ -40,7 +47,9 @@
 </template>
 
 <script lang="ts" setup>
-import { NGrid, NGridItem, NSpace, NCard } from 'naive-ui'
+import { NGrid, NGridItem, NSpace, NCard, NCollapse, NCollapseItem } from 'naive-ui'
+import MetadataSettings from '@/components/scan-settings/MetadataSettings.vue'
+import { defaultMetadata, type PdfMetadata } from '@/utils/pdf-builder/pdf-lib'
 import OverlaySettings from '@/components/scan-settings/OverlaySettings.vue'
 import MainContainer from '@/components/MainContainer.vue'
 import { type ScanConfig, defaultConfig, CanvasScanner } from '@/utils/scan-renderer/canvas-scan'
@@ -101,13 +110,15 @@ watchDebounced(
 
 const scale = computed(() => config.value.scale)
 const output = computed(() => config.value.output)
+const metadata = ref<PdfMetadata>({ ...defaultMetadata })
 
 const { save, progress, saving, scannedPDF } = useSaveScannedPDF(
   pdf,
   pdfRenderer,
   scanRenderer,
   scale,
-  output
+  output,
+  metadata
 )
 
 const generate = async () => {

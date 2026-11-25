@@ -64,5 +64,17 @@ export const settings = {
     hint: 'Applies the current settings to every file and gives you a ZIP.',
     progress: '{done} of {total} files',
     download: 'Download batch (ZIP)'
+  },
+  metadata: {
+    title_section: 'PDF metadata',
+    hint: 'Internal document properties. Empty fields stay empty.',
+    title: 'Title',
+    author: 'Author',
+    subject: 'Subject',
+    keywords: 'Keywords (comma separated)',
+    producer: 'Producer',
+    creator: 'Creator',
+    creationDate: 'Creation date',
+    modDate: 'Modification date'
   }
 }

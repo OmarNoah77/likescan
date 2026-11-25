@@ -1,5 +1,5 @@
 <template>
-  <n-button text tag="a" href="https://github.com/rwv/lookscanned.io" target="_blank">
+  <n-button text tag="a" href="https://github.com/OmarNoah77/likescan" target="_blank">
     <template #icon>
       <n-icon>
         <LogoGithub />

@@ -1,5 +1,5 @@
 import { PDF } from '@/utils/pdf-renderer/pdfjs'
-import { buildPDF } from '@/utils/pdf-builder/pdf-lib'
+import { buildPDF, type PdfMetadata } from '@/utils/pdf-builder/pdf-lib'
 import { zipImages } from '@/utils/zip-images'
 import { imagesToPdfFile, isImageFile, isPdfFile } from '@/utils/images-to-pdf-file'
 
@@ -21,7 +21,8 @@ export async function scanFile(
   scan: Scanner,
   scale: number,
   output: 'pdf' | 'zip',
-  onPage?: (done: number, total: number) => void
+  onPage?: (done: number, total: number) => void,
+  metadata?: PdfMetadata
 ): Promise<ScanEntry[]> {
   let source = file
   if (!isPdfFile(file)) {
@@ -47,7 +48,7 @@ export async function scanFile(
     return images.map((e) => ({ ...e, name: `${base}-scan/${e.name}` }))
   }
 
-  const pdfBlob = await buildPDF(pages)
+  const pdfBlob = await buildPDF(pages, metadata)
   return [{ name: `${base}-scan.pdf`, bytes: new Uint8Array(await pdfBlob.arrayBuffer()) }]
 }
 

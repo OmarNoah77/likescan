@@ -1,7 +1,7 @@
 import type { Ref } from 'vue'
 import { get } from '@vueuse/core'
 import { ref, computed, watch } from 'vue'
-import { buildPDF } from '@/utils/pdf-builder/pdf-lib'
+import { buildPDF, defaultMetadata, type PdfMetadata } from '@/utils/pdf-builder/pdf-lib'
 import { zipImages } from '@/utils/zip-images'
 
 interface PDFRenderer {
@@ -28,7 +28,8 @@ export function useSaveScannedPDF(
   pdfRenderer: Ref<PDFRenderer | undefined>,
   scanRenderer: Ref<ScanRenderer | undefined>,
   scale: Ref<number>,
-  output: Ref<'pdf' | 'zip'> = ref('pdf')
+  output: Ref<'pdf' | 'zip'> = ref('pdf'),
+  metadata: Ref<PdfMetadata> = ref({ ...defaultMetadata })
 ) {
   const finishedPages = ref(0)
   const totalPages = ref(0)
@@ -58,6 +59,7 @@ export function useSaveScannedPDF(
   watch(scanRenderer, reset)
   watch(scale, reset)
   watch(output, reset)
+  watch(metadata, reset, { deep: true })
 
   const save = async () => {
     try {
@@ -104,7 +106,7 @@ export function useSaveScannedPDF(
       }
 
       // generate pdf from scan pages
-      const pdfDocument = await buildPDF(scanPages)
+      const pdfDocument = await buildPDF(scanPages, get(metadata))
 
       scannedPDF.value = new File([pdfDocument], outputFilename.value, {
         type: 'application/pdf'

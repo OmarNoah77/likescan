@@ -64,5 +64,17 @@ export const settings = {
     hint: 'Aplica los ajustes actuales a cada archivo y entrega un ZIP.',
     progress: '{done} de {total} archivos',
     download: 'Descargar lote (ZIP)'
+  },
+  metadata: {
+    title_section: 'Metadatos del PDF',
+    hint: 'Datos internos del archivo (propiedades del documento). Los campos vacíos quedan vacíos.',
+    title: 'Título',
+    author: 'Autor',
+    subject: 'Asunto',
+    keywords: 'Palabras clave (separadas por comas)',
+    producer: 'Productor',
+    creator: 'Creador',
+    creationDate: 'Fecha de creación',
+    modDate: 'Fecha de modificación'
   }
 }
