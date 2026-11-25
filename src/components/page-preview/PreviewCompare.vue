@@ -6,7 +6,8 @@
       </template>
       <template #scan>
         <ImagePreview
-          :image="scanning ? undefined : scanImage?.blob"
+          :image="shownScan"
+          :class="{ 'is-scanning': scanning }"
           :height="image?.height"
           :width="image?.width"
         />
@@ -19,7 +20,7 @@
 <script lang="ts" setup>
 import SideBySidePreview from './SideBySidePreview.vue'
 import ImagePreview from './ImagePreview.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { computedAsync } from '@vueuse/core'
 import PreviewPagination from './PreviewPagination.vue'
 import { NSpace } from 'naive-ui'
@@ -91,9 +92,23 @@ const scanImage = computedAsync(
   scanning
 )
 
+// Se conserva la última imagen escaneada mientras llega la nueva,
+// para que la vista previa no parpadee al mover los controles.
+const shownScan = ref<Blob>()
+watch(scanImage, (v) => {
+  if (v?.blob) shownScan.value = v.blob
+})
+
 const numPages = computedAsync(async () => {
   page.value = 1
   if (!props.pdfRenderer) return 1
   return await props.pdfRenderer.getNumPages()
 }, 1)
 </script>
+
+<style scoped>
+.is-scanning {
+  opacity: 0.85;
+  transition: opacity 0.15s ease;
+}
+</style>

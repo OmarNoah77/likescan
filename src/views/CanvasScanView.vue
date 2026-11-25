@@ -44,7 +44,8 @@ import MainContainer from '@/components/MainContainer.vue'
 import { type ScanConfig, defaultConfig, CanvasScanner } from '@/utils/scan-renderer/canvas-scan'
 import ScanSettingsCard from '@/components/scan-settings/ScanSettingsCard.vue'
 import PDFUpload from '@/components/pdf-upload/PDFUpload.vue'
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
+import { watchDebounced } from '@vueuse/core'
 import PDFURL from '@/assets/examples/pdfs/test.pdf'
 import BackToIndex from '@/components/buttons/BackToIndex.vue'
 import { useHead } from '@unhead/vue'
@@ -86,12 +87,13 @@ const pdfRenderer = computed(() => {
 })
 
 const scanRenderer = ref(new ScanCacher(new CanvasScanner(config.value)))
-watch(
+// debounce: mover un slider dispara muchos cambios seguidos; se agrupan
+watchDebounced(
   config,
   (newConfig) => {
     scanRenderer.value = new ScanCacher(new CanvasScanner(newConfig))
   },
-  { deep: true }
+  { deep: true, debounce: 150 }
 )
 
 const scale = computed(() => config.value.scale)
