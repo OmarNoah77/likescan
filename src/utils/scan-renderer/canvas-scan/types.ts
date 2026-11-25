@@ -1,4 +1,24 @@
-export const colorspaces = ['gray', 'sRGB'] as const
+export const colorspaces = ['gray', 'sRGB', 'bw'] as const
+
+export interface WatermarkConfig {
+  enabled: boolean
+  text: string
+  opacity: number
+  size: number
+  angle: number
+  tiled: boolean
+}
+
+export interface StampConfig {
+  enabled: boolean
+  /** Imagen (firma o sello). No se serializa: viaja aparte al worker. */
+  image?: Blob
+  x: number
+  y: number
+  size: number
+  opacity: number
+  rotation: number
+}
 
 export interface ScanConfig {
   rotate: number
@@ -11,6 +31,9 @@ export interface ScanConfig {
   brightness: number
   yellowish: number
   contrast: number
+  bw_threshold: number
+  watermark: WatermarkConfig
+  stamp: StampConfig
   output_format: 'image/png' | 'image/jpeg'
 }
 
@@ -25,5 +48,23 @@ export const defaultConfig: ScanConfig = {
   brightness: 1,
   yellowish: 0,
   contrast: 1,
+  bw_threshold: 0.5,
+  watermark: {
+    enabled: false,
+    text: 'CONFIDENCIAL',
+    opacity: 0.15,
+    size: 6,
+    angle: -30,
+    tiled: true
+  },
+  stamp: {
+    enabled: false,
+    image: undefined,
+    x: 0.6,
+    y: 0.8,
+    size: 0.25,
+    opacity: 0.9,
+    rotation: 0
+  },
   output_format: 'image/jpeg'
 }

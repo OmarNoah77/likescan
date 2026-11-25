@@ -9,7 +9,7 @@
           <PDFUpload @update:pdf="pdf = $event" />
           <PDFInfo :pdf="pdf" v-if="pdf" />
 
-          <ScanSettingsCard v-model:config="config" />
+          <ScanSettingsCard v-model:config="config as any" />
 
           <SaveButtonCard
             @generate="generate"

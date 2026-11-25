@@ -52,8 +52,11 @@ export class CanvasScanner implements ScanRenderer {
       }
       worker.postMessage({
         page: image,
-        config: JSON.parse(JSON.stringify(this.config)),
-        noise: noiseBlob
+        config: JSON.parse(
+          JSON.stringify({ ...this.config, stamp: { ...this.config.stamp, image: undefined } })
+        ),
+        noise: noiseBlob,
+        stamp: this.config.stamp.image
       })
     })
 

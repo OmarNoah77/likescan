@@ -17,9 +17,9 @@
       <n-collapse-item :title="t('settings.settings')" name="Settings">
         <!-- Scan Settings -->
         <n-space :size="40" style="margin-bottom: 10px">
-          <ColorspaceSetting v-model:colorspace="config.colorspace" />
           <BorderSetting v-model:border="config.border" />
         </n-space>
+        <ExtraSettings v-model:config="config" style="margin-bottom: 10px" />
 
         <RotateSetting v-model:rotate="config.rotate" />
         <RotateVarianceSetting v-model:rotate_var="config.rotate_var" />
@@ -31,6 +31,7 @@
         <ScaleSetting v-model:scale="config.scale" />
       </n-collapse-item>
     </n-collapse>
+    <OverlaySettings v-model:config="config" style="margin-top: 8px" />
   </n-card>
 </template>
 
@@ -42,7 +43,8 @@ import { ChevronDown12Regular } from '@vicons/fluent'
 import BorderSetting from './settings/BorderSetting.vue'
 import RotateSetting from './settings/RotateSetting.vue'
 import RotateVarianceSetting from './settings/RotateVarianceSetting.vue'
-import ColorspaceSetting from './settings/ColorspaceSetting.vue'
+import ExtraSettings from './ExtraSettings.vue'
+import OverlaySettings from './OverlaySettings.vue'
 import BlurSetting from './settings/BlurSetting.vue'
 import NoiseSetting from './settings/NoiseSetting.vue'
 import ScaleSetting from './settings/ScaleSetting.vue'
@@ -50,7 +52,7 @@ import BrightnessSetting from './settings/BrightnessSetting.vue'
 import YellowishSetting from './settings/YellowishSetting.vue'
 import ContrastSetting from './settings/ContrastSetting.vue'
 
-import type { ScanConfig } from '@/utils/scan-renderer'
+import type { ScanConfig } from '@/utils/scan-renderer/canvas-scan'
 import { useI18n } from 'vue-i18n'
 import { useVModel } from '@vueuse/core'
 

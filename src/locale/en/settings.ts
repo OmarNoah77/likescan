@@ -11,7 +11,8 @@ export const settings = {
   colorspace: {
     label: 'Colorspace',
     colorful: 'Colorful',
-    grayscale: 'Gray'
+    grayscale: 'Gray',
+    bw: 'Black & white'
   },
   rotate: 'Rotate',
   rotateVariance: 'Rotate Variance',
@@ -20,5 +21,26 @@ export const settings = {
   scale: 'Resolution',
   yellowish: 'Yellowish',
   brightness: 'Brightness',
-  contrast: 'Contrast'
+  contrast: 'Contrast',
+  bwThreshold: 'B/W threshold',
+  watermark: {
+    title: 'Watermark',
+    enable: 'Enable',
+    text: 'Text',
+    opacity: 'Opacity',
+    size: 'Size',
+    angle: 'Angle',
+    tiled: 'Tile across page'
+  },
+  stamp: {
+    title: 'Signature & stamp',
+    enable: 'Enable',
+    upload: 'Upload image (PNG with transparent background)',
+    remove: 'Remove',
+    x: 'Horizontal position',
+    y: 'Vertical position',
+    size: 'Size',
+    opacity: 'Opacity',
+    rotation: 'Rotation'
+  }
 }

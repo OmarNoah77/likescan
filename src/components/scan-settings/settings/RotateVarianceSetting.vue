@@ -44,7 +44,7 @@ const formatTooltip = (value: number) => `±${value}°`
 
 const label = t('settings.rotateVariance')
 // split label into characters
-const characters = label.split('')
+const characters = label.split('').map((c) => (c === ' ' ? ' ' : c))
 const amplifier = 2
 const degrees = computed(() => {
   return characters.map(() => {
