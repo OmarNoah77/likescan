@@ -97,12 +97,14 @@ watchDebounced(
 )
 
 const scale = computed(() => config.value.scale)
+const output = computed(() => config.value.output)
 
 const { save, progress, saving, scannedPDF } = useSaveScannedPDF(
   pdf,
   pdfRenderer,
   scanRenderer,
-  scale
+  scale,
+  output
 )
 
 const generate = async () => {

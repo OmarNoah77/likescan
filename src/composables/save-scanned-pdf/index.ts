@@ -2,6 +2,7 @@ import type { Ref } from 'vue'
 import { get } from '@vueuse/core'
 import { ref, computed, watch } from 'vue'
 import { buildPDF } from '@/utils/pdf-builder/pdf-lib'
+import { zipImages } from '@/utils/zip-images'
 
 interface PDFRenderer {
   renderPage(
@@ -26,7 +27,8 @@ export function useSaveScannedPDF(
   pdf: Ref<File | undefined>,
   pdfRenderer: Ref<PDFRenderer | undefined>,
   scanRenderer: Ref<ScanRenderer | undefined>,
-  scale: Ref<number>
+  scale: Ref<number>,
+  output: Ref<'pdf' | 'zip'> = ref('pdf')
 ) {
   const finishedPages = ref(0)
   const totalPages = ref(0)
@@ -41,8 +43,8 @@ export function useSaveScannedPDF(
   const scannedPDF = ref<File | undefined>(undefined)
   const outputFilename = computed(() => {
     const originalFilename = pdf.value?.name ?? 'doc.pdf'
-    const filename = `${originalFilename.replace(/\.[^/.]+$/, '')}-scan.pdf`
-    return filename
+    const base = originalFilename.replace(/\.[^/.]+$/, '')
+    return output.value === 'zip' ? `${base}-scan.zip` : `${base}-scan.pdf`
   })
 
   const reset = () => {
@@ -55,6 +57,7 @@ export function useSaveScannedPDF(
   watch(pdfRenderer, reset)
   watch(scanRenderer, reset)
   watch(scale, reset)
+  watch(output, reset)
 
   const save = async () => {
     try {
@@ -89,6 +92,16 @@ export function useSaveScannedPDF(
           }
         })
       )
+
+      if (get(output) === 'zip') {
+        const base = outputFilename.value.replace(/-scan\.zip$/, '-scan')
+        const ext = scanPages[0]?.blob.type === 'image/png' ? 'png' : 'jpg'
+        const zipped = await zipImages(scanPages, base, ext)
+        scannedPDF.value = new File([zipped as BlobPart], outputFilename.value, {
+          type: 'application/zip'
+        })
+        return zipped
+      }
 
       // generate pdf from scan pages
       const pdfDocument = await buildPDF(scanPages)

@@ -12,11 +12,11 @@ export const settings = {
     label: 'Color',
     colorful: 'Color',
     grayscale: 'Grises',
-    bw: 'Blanco y negro'
+    bw: 'B/N'
   },
   rotate: 'Rotación',
   rotateVariance: 'Variación de rotación',
-  pdfSelectLabel: 'Seleccionar PDF',
+  pdfSelectLabel: 'Seleccionar PDF o imágenes',
   pdfNoSelectMessage: 'Ningún PDF seleccionado',
   scale: 'Resolución',
   yellowish: 'Amarillento',
@@ -42,5 +42,21 @@ export const settings = {
     size: 'Tamaño',
     opacity: 'Opacidad',
     rotation: 'Rotación'
+  },
+  pdfDropHint: 'o arrastra aquí un PDF o imágenes (JPG, PNG, WEBP…)',
+  pdfUnsupported: 'Formato no compatible. Usa un PDF o imágenes JPG, PNG, WEBP.',
+  output: {
+    label: 'Salida',
+    pdf: 'PDF',
+    zip: 'ZIP de imágenes'
+  },
+  paper: {
+    title: 'Papel',
+    edgeShadow: 'Sombra en los bordes',
+    unevenLight: 'Iluminación despareja',
+    fold: 'Dobleces',
+    foldNone: 'No',
+    foldHalf: 'Mitad',
+    foldTri: 'Tres'
   }
 }

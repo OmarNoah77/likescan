@@ -72,6 +72,8 @@ export async function scanCanvas(
   const noiseImage = await noiseImagePromise
   ctx.drawImage(noiseImage, 0, 0, width, height)
 
+  drawPaperEffects(ctx, width, height, config)
+
   if (config.colorspace === 'bw') {
     // el umbral se aplica sobre los píxeles finales (tras filtros y ruido)
     ctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -137,5 +139,62 @@ function drawStamp(ctx: Ctx, img: ImageBitmap, width: number, height: number, co
   ctx.translate(st.x * width, st.y * height)
   ctx.rotate((st.rotation * Math.PI) / 180)
   ctx.drawImage(img, -w / 2, -h / 2, w, h)
+  ctx.restore()
+}
+
+function drawPaperEffects(ctx: Ctx, width: number, height: number, config: ScanConfig) {
+  const { edgeShadow, unevenLight, fold } = config.paper
+  if (edgeShadow <= 0 && unevenLight <= 0 && fold === 'none') return
+
+  ctx.save()
+  ctx.setTransform(1, 0, 0, 1, 0, 0)
+  ctx.filter = 'none'
+
+  // iluminación despareja: degradado diagonal oscuro hacia una esquina
+  if (unevenLight > 0) {
+    const g = ctx.createLinearGradient(0, 0, width, height)
+    g.addColorStop(0, 'rgba(0,0,0,0)')
+    g.addColorStop(0.55, 'rgba(0,0,0,0)')
+    g.addColorStop(1, `rgba(0,0,0,${unevenLight * 0.4})`)
+    ctx.fillStyle = g
+    ctx.fillRect(0, 0, width, height)
+  }
+
+  // sombra en los bordes
+  if (edgeShadow > 0) {
+    const depth = Math.min(width, height) * 0.07
+    const dark = `rgba(0,0,0,${edgeShadow * 0.55})`
+    const clear = 'rgba(0,0,0,0)'
+    const edges: [number, number, number, number, number, number, number, number][] = [
+      [0, 0, 0, depth, 0, 0, width, depth], // arriba
+      [0, height, 0, height - depth, 0, height - depth, width, depth], // abajo
+      [0, 0, depth, 0, 0, 0, depth, height], // izquierda
+      [width, 0, width - depth, 0, width - depth, 0, depth, height] // derecha
+    ]
+    for (const [x0, y0, x1, y1, rx, ry, rw, rh] of edges) {
+      const g = ctx.createLinearGradient(x0, y0, x1, y1)
+      g.addColorStop(0, dark)
+      g.addColorStop(1, clear)
+      ctx.fillStyle = g
+      ctx.fillRect(rx, ry, rw, rh)
+    }
+  }
+
+  // dobleces: una línea clara junto a una oscura, como un pliegue real
+  if (fold !== 'none') {
+    const positions = fold === 'half' ? [0.5] : [1 / 3, 2 / 3]
+    const w = Math.max(2, width * 0.004)
+    for (const p of positions) {
+      const y = height * p
+      const g = ctx.createLinearGradient(0, y - w * 2, 0, y + w * 2)
+      g.addColorStop(0, 'rgba(255,255,255,0)')
+      g.addColorStop(0.35, 'rgba(255,255,255,0.30)')
+      g.addColorStop(0.5, 'rgba(0,0,0,0.22)')
+      g.addColorStop(0.65, 'rgba(0,0,0,0.08)')
+      g.addColorStop(1, 'rgba(0,0,0,0)')
+      ctx.fillStyle = g
+      ctx.fillRect(0, y - w * 2, width, w * 4)
+    }
+  }
   ctx.restore()
 }

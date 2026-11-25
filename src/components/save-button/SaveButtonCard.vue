@@ -48,12 +48,13 @@ const emit = defineEmits<{
 const download = async () => {
   if (!props.pdf) return
 
+  const isZip = props.pdf.name.toLowerCase().endsWith('.zip')
   await fileSave(props.pdf, {
     fileName: props.pdf.name,
-    extensions: ['.pdf'],
-    mimeTypes: ['application/pdf'],
+    extensions: [isZip ? '.zip' : '.pdf'],
+    mimeTypes: [isZip ? 'application/zip' : 'application/pdf'],
     startIn: 'downloads',
-    description: 'PDF File',
+    description: isZip ? 'ZIP File' : 'PDF File',
     id: 'lookscanned'
   })
 }

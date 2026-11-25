@@ -14,6 +14,12 @@
     >
       <n-slider v-model:value="config.bw_threshold" :min="0.1" :max="0.9" :step="0.01" />
     </n-form-item>
+    <n-form-item :label="t('settings.output.label')" :show-feedback="false">
+      <n-radio-group v-model:value="config.output" size="small">
+        <n-radio-button value="pdf">{{ t('settings.output.pdf') }}</n-radio-button>
+        <n-radio-button value="zip">{{ t('settings.output.zip') }}</n-radio-button>
+      </n-radio-group>
+    </n-form-item>
   </n-space>
 </template>
 

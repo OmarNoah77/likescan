@@ -5,9 +5,9 @@ export const actions = {
   backToIndex: 'Volver',
   preview: 'Vista previa',
   save: 'Guardar',
-  generateScannedPDF: 'Generar PDF escaneado',
+  generateScannedPDF: 'Generar escaneo',
   generating: 'Generando...',
-  downloadScannedPDF: 'Descargar PDF escaneado',
+  downloadScannedPDF: 'Descargar resultado',
   generateSuccess: '¡Generado con éxito! ',
   generateError: '¡Error al generar! '
 }

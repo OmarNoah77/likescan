@@ -23,6 +23,7 @@
     "@vicons/material": "^0.12.0",
     "@vicons/tabler": "^0.12.0",
     "browser-fs-access": "^0.35.0",
+    "fflate": "^0.8.3",
     "filesize": "^10.1.0",
     "jspdf": "^2.5.1",
     "magica-re-export": "^1.0.9",

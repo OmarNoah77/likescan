@@ -20,6 +20,15 @@ export interface StampConfig {
   rotation: number
 }
 
+export interface PaperConfig {
+  /** Sombra oscura en los bordes de la hoja (0-1) */
+  edgeShadow: number
+  /** Iluminación despareja del escáner (0-1) */
+  unevenLight: number
+  /** Dobleces marcados en la hoja */
+  fold: 'none' | 'half' | 'tri'
+}
+
 export interface ScanConfig {
   rotate: number
   rotate_var: number
@@ -32,6 +41,8 @@ export interface ScanConfig {
   yellowish: number
   contrast: number
   bw_threshold: number
+  paper: PaperConfig
+  output: 'pdf' | 'zip'
   watermark: WatermarkConfig
   stamp: StampConfig
   output_format: 'image/png' | 'image/jpeg'
@@ -49,6 +60,8 @@ export const defaultConfig: ScanConfig = {
   yellowish: 0,
   contrast: 1,
   bw_threshold: 0.5,
+  paper: { edgeShadow: 0, unevenLight: 0, fold: 'none' },
+  output: 'pdf',
   watermark: {
     enabled: false,
     text: 'CONFIDENCIAL',

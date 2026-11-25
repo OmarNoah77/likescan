@@ -42,5 +42,21 @@ export const settings = {
     size: 'Size',
     opacity: 'Opacity',
     rotation: 'Rotation'
+  },
+  pdfDropHint: 'or drop a PDF or images here (JPG, PNG, WEBP...)',
+  pdfUnsupported: 'Unsupported format. Use a PDF or JPG, PNG, WEBP images.',
+  output: {
+    label: 'Output',
+    pdf: 'PDF',
+    zip: 'Image ZIP'
+  },
+  paper: {
+    title: 'Paper',
+    edgeShadow: 'Edge shadow',
+    unevenLight: 'Uneven lighting',
+    fold: 'Folds',
+    foldNone: 'None',
+    foldHalf: 'Half',
+    foldTri: 'Tri-fold'
   }
 }

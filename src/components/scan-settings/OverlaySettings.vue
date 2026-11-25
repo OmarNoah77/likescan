@@ -51,6 +51,24 @@
         </template>
       </n-space>
     </n-collapse-item>
+
+    <n-collapse-item :title="t('settings.paper.title')" name="paper">
+      <n-space vertical :size="12">
+        <n-form-item :label="t('settings.paper.edgeShadow')" :show-feedback="false">
+          <n-slider v-model:value="config.paper.edgeShadow" :min="0" :max="1" :step="0.01" />
+        </n-form-item>
+        <n-form-item :label="t('settings.paper.unevenLight')" :show-feedback="false">
+          <n-slider v-model:value="config.paper.unevenLight" :min="0" :max="1" :step="0.01" />
+        </n-form-item>
+        <n-form-item :label="t('settings.paper.fold')" :show-feedback="false">
+          <n-radio-group v-model:value="config.paper.fold" size="small">
+            <n-radio-button value="none">{{ t('settings.paper.foldNone') }}</n-radio-button>
+            <n-radio-button value="half">{{ t('settings.paper.foldHalf') }}</n-radio-button>
+            <n-radio-button value="tri">{{ t('settings.paper.foldTri') }}</n-radio-button>
+          </n-radio-group>
+        </n-form-item>
+      </n-space>
+    </n-collapse-item>
   </n-collapse>
 </template>
 
@@ -65,7 +83,9 @@ import {
   NInput,
   NSlider,
   NCheckbox,
-  NButton
+  NButton,
+  NRadioGroup,
+  NRadioButton
 } from 'naive-ui'
 import { fileOpen } from 'browser-fs-access'
 import { useI18n } from 'vue-i18n'
