@@ -31,7 +31,6 @@
         <ScaleSetting v-model:scale="config.scale" />
       </n-collapse-item>
     </n-collapse>
-    <OverlaySettings v-model:config="config" style="margin-top: 8px" />
   </n-card>
 </template>
 
@@ -44,7 +43,6 @@ import BorderSetting from './settings/BorderSetting.vue'
 import RotateSetting from './settings/RotateSetting.vue'
 import RotateVarianceSetting from './settings/RotateVarianceSetting.vue'
 import ExtraSettings from './ExtraSettings.vue'
-import OverlaySettings from './OverlaySettings.vue'
 import BlurSetting from './settings/BlurSetting.vue'
 import NoiseSetting from './settings/NoiseSetting.vue'
 import ScaleSetting from './settings/ScaleSetting.vue'

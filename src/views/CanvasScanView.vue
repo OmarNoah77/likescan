@@ -19,19 +19,27 @@
           />
         </n-space>
       </n-grid-item>
-      <n-grid-item span="12 s:7 m:8 l:9">
+      <n-grid-item span="12 s:7 m:8 l:6">
         <PreviewCompare
           :pdfRenderer="pdfRenderer"
           :scanRenderer="scanRenderer"
           :scale="config.scale"
         />
       </n-grid-item>
+      <n-grid-item span="12 l:3">
+        <div class="overlay-column">
+          <n-card size="small">
+            <OverlaySettings v-model:config="config" />
+          </n-card>
+        </div>
+      </n-grid-item>
     </n-grid>
   </MainContainer>
 </template>
 
 <script lang="ts" setup>
-import { NGrid, NGridItem, NSpace } from 'naive-ui'
+import { NGrid, NGridItem, NSpace, NCard } from 'naive-ui'
+import OverlaySettings from '@/components/scan-settings/OverlaySettings.vue'
 import MainContainer from '@/components/MainContainer.vue'
 import { type ScanConfig, defaultConfig, CanvasScanner } from '@/utils/scan-renderer/canvas-scan'
 import ScanSettingsCard from '@/components/scan-settings/ScanSettingsCard.vue'
@@ -104,3 +112,12 @@ const generate = async () => {
   }
 }
 </script>
+
+<style scoped>
+.overlay-column {
+  position: sticky;
+  top: 16px;
+  max-height: calc(100vh - 32px);
+  overflow-y: auto;
+}
+</style>
