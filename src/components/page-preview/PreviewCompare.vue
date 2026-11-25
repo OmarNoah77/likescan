@@ -14,6 +14,7 @@
       </template>
     </SideBySidePreview>
     <PreviewPagination v-model:page="page" :numPages="numPages" v-if="numPages >= 2" />
+    <PageThumbnails v-model:page="page" :pdfRenderer="pdfRenderer" :numPages="numPages" />
   </n-space>
 </template>
 
@@ -23,6 +24,7 @@ import ImagePreview from './ImagePreview.vue'
 import { ref, watch } from 'vue'
 import { computedAsync } from '@vueuse/core'
 import PreviewPagination from './PreviewPagination.vue'
+import PageThumbnails from './PageThumbnails.vue'
 import { NSpace } from 'naive-ui'
 
 const page = ref(1)

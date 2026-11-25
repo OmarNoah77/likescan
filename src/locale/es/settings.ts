@@ -58,5 +58,11 @@ export const settings = {
     foldNone: 'No',
     foldHalf: 'Mitad',
     foldTri: 'Tres'
+  },
+  batch: {
+    start: 'Escanear varios archivos (lote)',
+    hint: 'Aplica los ajustes actuales a cada archivo y entrega un ZIP.',
+    progress: '{done} de {total} archivos',
+    download: 'Descargar lote (ZIP)'
   }
 }

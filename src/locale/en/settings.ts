@@ -58,5 +58,11 @@ export const settings = {
     foldNone: 'None',
     foldHalf: 'Half',
     foldTri: 'Tri-fold'
+  },
+  batch: {
+    start: 'Scan several files (batch)',
+    hint: 'Applies the current settings to every file and gives you a ZIP.',
+    progress: '{done} of {total} files',
+    download: 'Download batch (ZIP)'
   }
 }

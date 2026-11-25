@@ -17,6 +17,8 @@
             :saving="saving"
             :pdf="scannedPDF"
           />
+
+          <BatchCard :scanRenderer="scanRenderer" :scale="scale" :output="output" />
         </n-space>
       </n-grid-item>
       <n-grid-item span="12 s:7 m:8 l:6">
@@ -53,6 +55,7 @@ import { useI18n } from 'vue-i18n'
 import { PDF } from '@/utils/pdf-renderer/pdfjs'
 import PreviewCompare from '@/components/page-preview/PreviewCompare.vue'
 import SaveButtonCard from '@/components/save-button/SaveButtonCard.vue'
+import BatchCard from '@/components/save-button/BatchCard.vue'
 import { useSaveScannedPDF } from '@/composables/save-scanned-pdf'
 import PDFInfo from '@/components/pdf-upload/PDFInfo.vue'
 import { ScanCacher } from '@/utils/scan-renderer/scan-cacher'
